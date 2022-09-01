@@ -4,6 +4,12 @@
 
 @import "./variables";
 
+@import "toastr";
+
+#toast-container > div {
+  box-shadow: none !important;
+}
+
 body {
   background: $third-color;
 }

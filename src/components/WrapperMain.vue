@@ -60,9 +60,7 @@ export default {
     border-radius: 8px;
     fill: #fff;
 
-    &:hover {
-      background: rgba(255, 255, 255, .2);
-    }
+    @extend %button-hover;
   }
 }
 

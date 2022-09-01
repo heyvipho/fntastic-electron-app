@@ -1,1 +1,7 @@
 @import "./variables";
+
+%button-hover {
+  &:hover {
+    background: rgba(255, 255, 255, .2);
+  }
+}

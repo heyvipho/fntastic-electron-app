@@ -1,11 +1,11 @@
 <script>
 import WrapperMain from "@/components/WrapperMain.vue";
-import Rooms from "@/components/Rooms.vue";
+import RoomList from "@/components/RoomList.vue";
 
 export default {
   name: 'HomeView',
   components: {
-    Rooms,
+    RoomList,
     WrapperMain,
   },
   props: {},
@@ -21,7 +21,7 @@ export default {
 
 <template>
   <WrapperMain>
-    <Rooms></Rooms>
+    <RoomList></RoomList>
   </WrapperMain>
 </template>
 
