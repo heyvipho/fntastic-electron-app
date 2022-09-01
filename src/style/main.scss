@@ -1,0 +1,9 @@
+@import "./bs-variables";
+@import "bootstrap/scss/bootstrap-reboot";
+//@import "bootstrap/scss/bootstrap-grid";
+
+@import "./variables";
+
+body {
+  background: $third-color;
+}

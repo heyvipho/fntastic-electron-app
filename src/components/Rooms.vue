@@ -1,12 +1,11 @@
 <script>
 export default {
-  name: 'App',
+  name: 'Rooms',
   components: {},
   props: {},
   emits: [],
   data() {
-    return {
-    }
+    return {}
   },
   watch: {},
   computed: {},
@@ -15,9 +14,17 @@ export default {
 </script>
 
 <template>
-  <router-view></router-view>
+  <div class="rooms">
+
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import "@/style/global";
+
+.rooms {
+  height: 100vh;
+  width: 200px;
+  background: $second-color;
+}
 </style>

@@ -1,12 +1,12 @@
 <script>
+import WrapperMain from "@/components/WrapperMain.vue";
 export default {
-  name: 'App',
-  components: {},
+  name: 'SettingsView',
+  components: {WrapperMain},
   props: {},
   emits: [],
   data() {
-    return {
-    }
+    return {}
   },
   watch: {},
   computed: {},
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-  <router-view></router-view>
+  <WrapperMain></WrapperMain>
 </template>
 
 <style lang="scss" scoped>
