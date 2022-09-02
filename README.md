@@ -7,10 +7,11 @@ A test for Fntastic company
 - admin
 - fntastic
 - heyvipho
+- Agr
 - toppi
+- B1ACKBE4RD
 - white_wine
 - GINGERcat
-- B1ACKBE4RD
 
 ## Project Setup
 
