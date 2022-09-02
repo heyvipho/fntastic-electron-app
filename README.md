@@ -1,29 +1,35 @@
-# fntastic-test-app
+# Fntastic Test
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+A test for Fntastic company
 
 ## Project Setup
 
+### Server
+
+It's necessary a server for application. Run it by this command.
+
 ```sh
-npm install
+docker-compose up -d
 ```
 
-### Compile and Hot-Reload for Development
+### Client
+
+When server is running you can start electron application.
+
+#### Install npm dependencies
 
 ```sh
-npm run dev
+npm i
 ```
 
-### Compile and Minify for Production
+#### Build vue application
 
 ```sh
-npm run build
+npm run vite-build
+```
+
+#### Run electron application
+
+```sh
+npm run start
 ```
