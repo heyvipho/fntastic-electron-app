@@ -100,19 +100,21 @@ export default {
 <style lang="scss" scoped>
 @import "@/style/global";
 
+$width: 250px;
+
 $status-height: 64px;
 $status-color: #1C202C;
 
 .room-bar {
   height: 100vh;
-  width: 200px;
+  width: $width;
   background: $second-color;
   display: flex;
   flex-direction: column;
 }
 
 .room-list {
-  width: 200px;
+  width: $width;
   overflow-y: auto;
   flex: 1 1 auto;
 
@@ -143,13 +145,13 @@ $status-color: #1C202C;
 .status {
   flex: 0 0 auto;
   height: $status-height;
-  width: 200px;
+  width: $width;
   background: $status-color;
 }
 
 .room-current {
   height: $status-height;
-  width: 200px;
+  width: $width;
   display: flex;
   align-items: center;
 

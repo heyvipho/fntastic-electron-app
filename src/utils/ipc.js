@@ -1,4 +1,4 @@
-const api = {
+const ipc = {
   setServerAddress(address) {
     return window.electron.setServerAddress(address)
   },
@@ -14,8 +14,4 @@ const api = {
   },
 }
 
-const externalMethods = {
-
-}
-
-export {api, externalMethods}
+export {ipc}

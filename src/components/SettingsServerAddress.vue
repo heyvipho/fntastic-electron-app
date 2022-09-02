@@ -1,6 +1,7 @@
 <script>
-import {api} from "@/utils/api";
+import {ipc} from "@/utils/ipc";
 import toast from "@/utils/toast";
+import {connect} from "@/utils/socket";
 
 export default {
   name: 'SettingsServerAddress',
@@ -13,19 +14,26 @@ export default {
     }
   },
   async created() {
-    const {address} = await api.getServerAddress()
+    const {address} = await ipc.getServerAddress()
     this.address = address
   },
   watch: {},
   methods: {
     async setServerAddress(address) {
       try {
-        await api.setServerAddress(address)
+        await ipc.setServerAddress(address)
       } catch (e) {
         toast.error("Error was occurred")
         return
       }
       toast.info("Address was changed successfully")
+    },
+    async reconnect() {
+      try {
+        await connect()
+      } catch (e) {
+        toast.error("Error was occurred")
+      }
     },
   },
 }
@@ -38,6 +46,12 @@ export default {
       @click="setServerAddress(address)"
   >
     Save
+  </button>
+  <button
+      class="button"
+      @click="reconnect()"
+  >
+    Reconect
   </button>
 </template>
 

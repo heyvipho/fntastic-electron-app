@@ -1,5 +1,5 @@
 <script>
-import {api} from "@/utils/api";
+import {ipc} from "@/utils/ipc";
 import toast from "@/utils/toast";
 
 export default {
@@ -14,7 +14,7 @@ export default {
   },
   async created() {
     try {
-      const {userLogin} = await api.getUserLogin()
+      const {userLogin} = await ipc.getUserLogin()
       this.userLogin = userLogin
     } catch (e) {
       toast.error("Error was occurred")
@@ -24,7 +24,7 @@ export default {
   methods: {
     async setUserLogin(userLogin) {
       try {
-        await api.setUserLogin(userLogin)
+        await ipc.setUserLogin(userLogin)
       } catch (e) {
         toast.error("Error was occurred")
         return

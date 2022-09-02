@@ -1,4 +1,6 @@
 <script>
+import {connect} from "@/utils/socket"
+
 export default {
   name: 'App',
   components: {},
@@ -8,8 +10,19 @@ export default {
     return {
     }
   },
-  watch: {},
-  computed: {},
+  created() {
+    connect()
+  },
+  watch: {
+    connected(value) {
+        console.log(value)
+    }
+  },
+  computed: {
+    connected() {
+      return this.$store.state.main.connected
+    }
+  },
   methods: {},
 }
 </script>
