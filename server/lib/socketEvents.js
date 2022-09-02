@@ -1,13 +1,11 @@
-import {getRooms, moveUser, kickUser, addSocket, removeSocket} from "./rooms.js";
+import {getUserInfo, getRooms, moveUser, kickUser, addSocket, removeSocket} from "./rooms.js";
 
 const onConnection = socket => {
-    console.log('a user connected');
-    console.log(socket.id)
-
     socket.emit('rooms', getRooms())
 
     socket.on("login", ({ login }) => {
         addSocket(socket.id, login)
+        socket.emit('user-info', getUserInfo({login}))
     })
     socket.on("disconnect", () => {
         removeSocket(socket.id)

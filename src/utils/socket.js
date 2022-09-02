@@ -10,27 +10,27 @@ const connect = async () => {
     socket.disconnect()
   }
 
+  store.dispatch('main/reset')
+
   const { address } = await ipc.getServerAddress()
 
   socket = io(`ws://${address}`)
 
   socket.on("connect", async () => {
-    console.log(socket.id)
-
     store.commit('main/setConnected', true)
 
     const { userLogin: login } = await ipc.getUserLogin()
     socket.emit('login', {login})
 
-    toast.info('You was connected successfully')
+    toast.info('You were connected successfully')
   })
 
   socket.on('rooms', rooms => {
     store.commit('rooms/setRooms', rooms)
   })
 
-  socket.on('your-room', room => {
-    store.commit('rooms/setYourRoom', room)
+  socket.on('user-info', info => {
+    store.commit('users/setInfo', info)
   })
 
   socket.on("disconnect", () => {
@@ -45,8 +45,6 @@ const connect = async () => {
     toast.error("Error was occurred while connecting to the server")
     socket.disconnect()
   });
-
-  return socket
 }
 
 const emitter = {

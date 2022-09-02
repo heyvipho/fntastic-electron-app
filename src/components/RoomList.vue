@@ -18,18 +18,23 @@ export default {
     rooms() {
       return this.$store.state.rooms.rooms
     },
-    yourRoom() {
-      return this.$store.state.rooms.yourRoom
+    userInfo() {
+      console.log(this.$store.state.users.info)
+      return this.$store.state.users.info
     },
   },
   methods: {
     async moveSelf(roomID) {
-      const { userLogin: login } = await ipc.getUserLogin()
+      const login = await this.getUserLogin()
       emitter.moveUser({login, roomID})
     },
     async leave() {
-      const { userLogin: login } = await ipc.getUserLogin()
+      const login = await this.getUserLogin()
       emitter.kickUser({login})
+    },
+    async getUserLogin() {
+      const { userLogin } = await ipc.getUserLogin()
+      return userLogin
     },
   },
 }
@@ -59,10 +64,13 @@ export default {
 
     <div class="status">
       <div
-          v-if="yourRoom !== null"
+          v-if="userInfo !== null"
           class="room-current"
       >
-        <div class="title">{{ yourRoom.title }}</div>
+        <div class="box">
+          <div class="title">{{ userInfo.room.title }}</div>
+          <div class="login">{{ userInfo.user.login }}</div>
+        </div>
         <button
             @click="leave()"
             class="button"
@@ -132,16 +140,29 @@ $status-color: #1C202C;
   display: flex;
   align-items: center;
 
-  .title {
+  .box {
     flex: 1 1 auto;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #fff;
     margin: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+    .title {
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 4px;
+    }
+
+    .login {
+      font-size: 8px;
+      font-weight: 500;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   .button {

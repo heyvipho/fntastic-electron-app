@@ -1,7 +1,16 @@
 export default {
   namespaced: true,
-  state: () => ({}),
+  state: () => ({
+    info: null,
+  }),
   getters: {},
-  mutations: {},
+  mutations: {
+    setInfo(state, value) {
+      state.info = value
+    },
+    reset(state) {
+      state.info = null
+    },
+  },
   actions: {},
 }

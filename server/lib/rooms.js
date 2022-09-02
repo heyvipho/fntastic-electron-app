@@ -1,4 +1,5 @@
 import {io} from './api.js'
+import db from "./db.js";
 
 const users = new Map()
 
@@ -7,27 +8,25 @@ const sockets = new Map()
 const roomIDs = []
 const rooms = new Map()
 
-users.set('example', {
-  roomID: null,
-})
+const init = async () => {
+  const dbUsers = await db.getUsers()
+  dbUsers.forEach(({login}) => {
+    users.set(login, {
+      roomID: null,
+    })
+  })
 
-roomIDs.push(0, 2)
-rooms.set(0, {
-  title: 'Room Title',
-  users: new Set(),
-})
-rooms.set(1, {
-  title: 'Room Title 2',
-  users: new Set(),
-})
-rooms.set(2, {
-  title: 'Room Title 3',
-  users: new Set(),
-})
-rooms.set(3, {
-  title: 'Room Title 4',
-  users: new Set(),
-})
+  const dbRooms = await db.getRooms()
+  dbRooms.forEach(({id, title}) => {
+    roomIDs.push(id)
+    rooms.set(id, {
+      title,
+      users: new Set(),
+    })
+  })
+}
+
+init()
 
 const addSocket = (id, login) => {
   sockets.set(id, {login})
@@ -37,14 +36,46 @@ const removeSocket = (id) => {
   sockets.delete(id)
 }
 
+const getUserInfo = ({login}) => {
+  const user = users.get(login)
+  if (!user) {
+    return null
+  }
+  if (user.roomID === null) {
+    return null
+  }
+  const room = rooms.get(user.roomID)
+  if (!room) {
+    return null
+  }
+
+  const roomUsers = []
+  room.users.forEach(login => {
+    roomUsers.push({
+      login,
+    })
+  })
+
+  return {
+    user: {
+      login,
+    },
+    room: {
+      id: user.roomID,
+      title: room.title,
+      users: roomUsers,
+    },
+  }
+}
+
 const getRooms = () => {
   return roomIDs.map(id => {
     const room = rooms.get(id)
 
     const users = []
-    room.users.forEach(nickname => {
+    room.users.forEach(login => {
       users.push({
-        nickname: nickname,
+        login,
       })
     })
 
@@ -118,33 +149,8 @@ const moveUser = ({login, roomID, onError = () => {}}) => {
 const sendUpdates = () => {
   sockets.forEach(({login}, socketID) => {
     io.to(socketID).emit('rooms', getRooms())
-
-    const user = users.get(login)
-    if (!user) {
-      return
-    }
-    if (user.roomID === null) {
-      io.to(socketID).emit('your-room', null)
-      return
-    }
-    const room = rooms.get(user.roomID)
-    if (!room) {
-      return
-    }
-
-    const roomUsers = []
-    room.users.forEach(nickname => {
-      roomUsers.push({
-        nickname: nickname,
-      })
-    })
-
-    io.to(socketID).emit('your-room', {
-      id: user.roomID,
-      title: room.title,
-      users: roomUsers,
-    })
+    io.to(socketID).emit('user-info', getUserInfo({login}))
   })
 }
 
-export {getRooms, moveUser, kickUser, addSocket, removeSocket}
+export {getUserInfo, getRooms, moveUser, kickUser, addSocket, removeSocket}

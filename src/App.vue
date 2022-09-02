@@ -13,16 +13,8 @@ export default {
   created() {
     connect()
   },
-  watch: {
-    connected(value) {
-        console.log(value)
-    }
-  },
-  computed: {
-    connected() {
-      return this.$store.state.main.connected
-    }
-  },
+  watch: {},
+  computed: {},
   methods: {},
 }
 </script>

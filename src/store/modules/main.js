@@ -7,7 +7,12 @@ export default {
   mutations: {
     setConnected(state, value) {
       state.connected = value
-    }
+    },
   },
-  actions: {},
+  actions: {
+    reset({ commit }) {
+      commit('users/reset')
+      commit('rooms/reset')
+    },
+  },
 }

@@ -41,7 +41,7 @@ export default {
         v-for="user in room.users"
         class="item"
     >
-      {{ user.nickname }}
+      {{ user.login }}
     </li>
   </ul>
 </div>
