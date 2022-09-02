@@ -1,14 +1,17 @@
 export default {
   namespaced: true,
-  state: () => ({}),
+  state: () => ({
+    rooms: [],
+    yourRoom: null,
+  }),
   getters: {},
-  mutations: {},
-  actions: {
-    moveUser({}, {userID, roomID}) {
-      console.log(userID, roomID)
+  mutations: {
+    setRooms(state, value) {
+      state.rooms = value
     },
-    kickUser({}, {userID}) {
-      console.log(userID)
+    setYourRoom(state, value) {
+      state.yourRoom = value
     },
   },
+  actions: {},
 }

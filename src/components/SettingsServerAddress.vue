@@ -26,7 +26,10 @@ export default {
         toast.error("Error was occurred")
         return
       }
+
       toast.info("Address was changed successfully")
+
+      await this.reconnect()
     },
     async reconnect() {
       try {

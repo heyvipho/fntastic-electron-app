@@ -1,6 +1,7 @@
 <script>
 import {ipc} from "@/utils/ipc";
 import toast from "@/utils/toast";
+import {connect} from "@/utils/socket";
 
 export default {
   name: 'SettingsUser',
@@ -29,7 +30,14 @@ export default {
         toast.error("Error was occurred")
         return
       }
+
       toast.info("User login was changed successfully")
+
+      try {
+        await connect()
+      } catch (e) {
+        toast.error("Error was occurred")
+      }
     },
   },
 }

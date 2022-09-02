@@ -1,5 +1,7 @@
 <script>
 import RoomListRoom from "@/components/RoomListRoom.vue";
+import {ipc} from "@/utils/ipc";
+import {emitter} from "@/utils/socket";
 
 export default {
   name: 'RoomList',
@@ -9,53 +11,25 @@ export default {
   props: {},
   emits: [],
   data() {
-    return {
-      rooms: [
-        {
-          id: 0,
-          title: 'Room Title',
-          users: [
-            {
-              id: 0,
-              nickname: 'nickame123',
-            },
-          ],
-        },
-        {
-          id: 1,
-          title: 'Room Title',
-          users: [],
-        },
-        {
-          id: 2,
-          title: 'Room Title',
-          users: [
-            {
-              id: 0,
-              nickname: 'nickame123',
-            },
-          ],
-        },
-      ],
-    }
+    return {}
   },
   watch: {},
-  computed: {},
-  methods: {
-    moveSelf(roomID) {
-      const userID = 0
-
-      this.$store.dispatch('rooms/moveUser', {
-        userID,
-        roomID,
-      })
+  computed: {
+    rooms() {
+      return this.$store.state.rooms.rooms
     },
-    leave() {
-      const userID = 0
-
-      this.$store.dispatch('rooms/kickUser', {
-        userID,
-      })
+    yourRoom() {
+      return this.$store.state.rooms.yourRoom
+    },
+  },
+  methods: {
+    async moveSelf(roomID) {
+      const { userLogin: login } = await ipc.getUserLogin()
+      emitter.moveUser({login, roomID})
+    },
+    async leave() {
+      const { userLogin: login } = await ipc.getUserLogin()
+      emitter.kickUser({login})
     },
   },
 }
@@ -84,8 +58,11 @@ export default {
     </div>
 
     <div class="status">
-      <div class="room-current">
-        <div class="title">Комнатаadfasdfasdfsafadf</div>
+      <div
+          v-if="yourRoom !== null"
+          class="room-current"
+      >
+        <div class="title">{{ yourRoom.title }}</div>
         <button
             @click="leave()"
             class="button"
@@ -121,7 +98,7 @@ $status-color: #1C202C;
   .stub {
     %common {
       height: 16px;
-      background: rgba(255, 255, 255, .1);
+      background: rgba(255, 255, 255, .05);
       margin: 8px;
     }
 

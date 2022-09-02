@@ -14,23 +14,48 @@ const connect = async () => {
 
   socket = io(`ws://${address}`)
 
-  socket.on("connect", () => {
+  socket.on("connect", async () => {
     console.log(socket.id)
 
     store.commit('main/setConnected', true)
+
+    const { userLogin: login } = await ipc.getUserLogin()
+    socket.emit('login', {login})
+
     toast.info('You was connected successfully')
+  })
+
+  socket.on('rooms', rooms => {
+    store.commit('rooms/setRooms', rooms)
+  })
+
+  socket.on('your-room', room => {
+    store.commit('rooms/setYourRoom', room)
   })
 
   socket.on("disconnect", () => {
     store.commit('main/setConnected', false)
   });
 
+  socket.on('server-error', ({ description }) => {
+    toast.error(description)
+  })
+
   socket.on("connect_error", () => {
-    toast.info("Error was occurred while connecting to the server")
+    toast.error("Error was occurred while connecting to the server")
     socket.disconnect()
   });
 
   return socket
 }
 
-export {connect}
+const emitter = {
+  moveUser({ login, roomID }) {
+    socket.emit('move-user', { login, roomID })
+  },
+  kickUser({ login }) {
+    socket.emit('kick-user', { login })
+  },
+}
+
+export {connect, emitter}
