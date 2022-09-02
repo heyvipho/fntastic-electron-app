@@ -3,8 +3,15 @@ import VolumeHigh from "@/components/icons/VolumeHigh.vue";
 export default {
   name: 'RoomListRoom',
   components: {VolumeHigh},
-  props: {},
-  emits: [],
+  props: {
+    room: {
+      type: Object,
+      required: true,
+    }
+  },
+  emits: [
+      'titleClick',
+  ],
   data() {
     return {
     }
@@ -19,19 +26,23 @@ export default {
 <div class="room">
   <div
       class="title"
+      @click="$emit('titleClick', room.id)"
   >
     <div class="icon">
       <VolumeHigh></VolumeHigh>
     </div>
     <div class="text">
-      Комната
+      {{ room.title }}
     </div>
   </div>
 
   <ul class="user-list">
-    <li class="item">Nickname</li>
-    <li class="item">Nickname</li>
-    <li class="item">Nickname</li>
+    <li
+        v-for="user in room.users"
+        class="item"
+    >
+      {{ user.nickname }}
+    </li>
   </ul>
 </div>
 </template>
@@ -54,6 +65,7 @@ export default {
 
   .title {
     cursor: default;
+    user-select: none;
     border-radius: 8px;
     display: flex;
     align-items: center;

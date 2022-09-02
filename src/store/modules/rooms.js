@@ -3,5 +3,9 @@ export default {
   state: () => ({}),
   getters: {},
   mutations: {},
-  actions: {},
+  actions: {
+    moveUser({}, {roomID, userID}) {
+      console.log(roomID, userID)
+    }
+  },
 }
