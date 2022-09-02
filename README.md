@@ -6,7 +6,7 @@ A test for Fntastic company
 
 ### Server
 
-It's necessary a server for application. Run it by this command.
+It's necessary a server for the application. Run it by this command.
 
 ```sh
 docker-compose up -d
@@ -14,7 +14,7 @@ docker-compose up -d
 
 ### Client
 
-When server is running you can start electron application.
+When the server is running you can start the electron application.
 
 #### Install npm dependencies
 
@@ -28,8 +28,14 @@ npm i
 npm run vite-build
 ```
 
-#### Run electron application
+#### Start electron application
 
 ```sh
 npm run start
+```
+
+#### You can use an environment variable in order to start some applications on one machine. It will replace storage dir path.
+
+```sh
+ELECTRON_STORE_PATH=./electron-data npm run start
 ```
