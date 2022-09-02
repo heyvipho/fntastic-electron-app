@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron-forge start",
     "vite-dev": "vite",
     "vite-build": "vite build",
-    "vite-preview": "vite preview --port 4173"
+    "vite-preview": "vite preview --port 4173",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
     "bootstrap": "^5.2.0",
-    "electron": "^20.1.1",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "toastr": "^2.1.4",
     "vue": "^3.2.37",
@@ -18,9 +20,42 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.65",
+    "@electron-forge/maker-deb": "^6.0.0-beta.65",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
+    "@electron-forge/maker-zip": "^6.0.0-beta.65",
     "@vitejs/plugin-vue": "^3.0.1",
+    "electron": "^20.1.1",
     "sass": "^1.54.8",
     "socket.io-client": "^4.5.1",
     "vite": "^3.0.4"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "fntastic_test"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
