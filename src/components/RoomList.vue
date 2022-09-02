@@ -50,40 +50,71 @@ export default {
         roomID,
       })
     },
+    leave() {
+      const userID = 0
+
+      this.$store.dispatch('rooms/kickUser', {
+        userID,
+      })
+    },
   },
 }
 </script>
 
 <template>
-  <div class="room-list">
-    <div
-        v-if="rooms.length === 0"
-        class="stub"
-    >
-      <div class="title"></div>
-      <div class="user"></div>
-      <div class="user"></div>
-      <div class="title"></div>
-      <div class="user"></div>
-      <div class="user"></div>
+  <div class="room-bar">
+    <div class="room-list">
+      <div
+          v-if="rooms.length === 0"
+          class="stub"
+      >
+        <div class="title"></div>
+        <div class="user"></div>
+        <div class="user"></div>
+        <div class="title"></div>
+        <div class="user"></div>
+        <div class="user"></div>
+      </div>
+      <RoomListRoom
+          v-else
+          v-for="room in rooms"
+          :room="room"
+          @titleClick="moveSelf($event)"
+      ></RoomListRoom>
     </div>
-    <RoomListRoom
-        v-else
-        v-for="room in rooms"
-        :room="room"
-        @titleClick="moveSelf($event)"
-    ></RoomListRoom>
+
+    <div class="status">
+      <div class="room-current">
+        <div class="title">Комнатаadfasdfasdfsafadf</div>
+        <button
+            @click="leave()"
+            class="button"
+        >
+          Leave
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import "@/style/global";
 
-.room-list {
+$status-height: 64px;
+$status-color: #1C202C;
+
+.room-bar {
   height: 100vh;
   width: 200px;
   background: $second-color;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-list {
+  width: 200px;
   overflow-y: auto;
+  flex: 1 1 auto;
 
   .stub {
     %common {
@@ -105,6 +136,48 @@ export default {
       margin-left: 32px;
 
       @extend %common;
+    }
+  }
+}
+
+.status {
+  flex: 0 0 auto;
+  height: $status-height;
+  width: 200px;
+  background: $status-color;
+}
+
+.room-current {
+  height: $status-height;
+  width: 200px;
+  display: flex;
+  align-items: center;
+
+  .title {
+    flex: 1 1 auto;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .button {
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, .2);
+    outline: none;
+    border: none;
+    color: white;
+    height: 32px;
+    border-radius: 8px;
+    padding: 0 12px;
+    margin-right: 16px;
+
+    &:active {
+      background: rgba(255, 255, 255, .1);
     }
   }
 }

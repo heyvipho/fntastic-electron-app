@@ -4,8 +4,11 @@ export default {
   getters: {},
   mutations: {},
   actions: {
-    moveUser({}, {roomID, userID}) {
-      console.log(roomID, userID)
-    }
+    moveUser({}, {userID, roomID}) {
+      console.log(userID, roomID)
+    },
+    kickUser({}, {userID}) {
+      console.log(userID)
+    },
   },
 }
