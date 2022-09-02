@@ -2,6 +2,16 @@
 
 A test for Fntastic company
 
+## Default user logins in database
+- example
+- admin
+- fntastic
+- heyvipho
+- toppi
+- white_wine
+- GINGERcat
+- B1ACKBE4RD
+
 ## Project Setup
 
 ### Server

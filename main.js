@@ -15,9 +15,9 @@ function createWindow () {
     }
   })
 
-  if (process.env !== 'production') {
-    mainWindow.webContents.openDevTools()
-  }
+  // if (process.env !== 'production') {
+  //   mainWindow.webContents.openDevTools()
+  // }
 
   // and load the index.html of the app.
   // mainWindow.loadFile('./app/dist/index.html')
