@@ -6,4 +6,8 @@ const error = (desc, heading = null) => {
   toastr.error(desc, heading)
 }
 
-export default { error }
+const info = (desc, heading = null) => {
+  toastr.info(desc, heading)
+}
+
+export default { error, info }
