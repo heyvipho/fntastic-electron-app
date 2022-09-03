@@ -41,6 +41,16 @@ const getUserInfo = ({login}) => {
   if (!user) {
     return null
   }
+  return {
+    login,
+  }
+}
+
+const getRoomInfo = ({login}) => {
+  const user = users.get(login)
+  if (!user) {
+    return null
+  }
   if (user.roomID === null) {
     return null
   }
@@ -57,14 +67,9 @@ const getUserInfo = ({login}) => {
   })
 
   return {
-    user: {
-      login,
-    },
-    room: {
-      id: user.roomID,
-      title: room.title,
-      users: roomUsers,
-    },
+    id: user.roomID,
+    title: room.title,
+    users: roomUsers,
   }
 }
 
@@ -149,7 +154,7 @@ const moveUser = ({login, roomID, onError = () => {}}) => {
 const sendUpdates = () => {
   sockets.forEach(({login}, socketID) => {
     io.to(socketID).emit('rooms', getRooms())
-    io.to(socketID).emit('user-info', getUserInfo({login}))
+    io.to(socketID).emit('room-info', getRoomInfo({login}))
   })
 }
 

@@ -17,20 +17,22 @@ const connect = async () => {
   socket = io(`ws://${address}`)
 
   socket.on("connect", async () => {
-    store.commit('main/setConnected', true)
-
     const { userLogin: login } = await ipc.getUserLogin()
     socket.emit('login', {login})
+  })
 
-    toast.info('You were connected successfully')
+  socket.on('user-info', info => {
+    store.commit('main/setConnected', true)
+    toast.info('You were connected and logged in successfully')
+    store.commit('users/setInfo', info)
+  })
+
+  socket.on('room-info', info => {
+    store.commit('rooms/setInfo', info)
   })
 
   socket.on('rooms', rooms => {
     store.commit('rooms/setRooms', rooms)
-  })
-
-  socket.on('user-info', info => {
-    store.commit('users/setInfo', info)
   })
 
   socket.on("disconnect", () => {

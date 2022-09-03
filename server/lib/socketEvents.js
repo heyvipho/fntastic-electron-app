@@ -4,8 +4,14 @@ const onConnection = socket => {
     socket.emit('rooms', getRooms())
 
     socket.on("login", ({ login }) => {
-        addSocket(socket.id, login)
-        socket.emit('user-info', getUserInfo({login}))
+        const info = getUserInfo({login})
+        if (info) {
+            addSocket(socket.id, login)
+            socket.emit('user-info', info)
+        } else {
+            onError('No such login')
+            socket.disconnect()
+        }
     })
     socket.on("disconnect", () => {
         removeSocket(socket.id)

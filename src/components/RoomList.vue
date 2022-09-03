@@ -18,8 +18,10 @@ export default {
     rooms() {
       return this.$store.state.rooms.rooms
     },
+    roomInfo() {
+      return this.$store.state.rooms.info
+    },
     userInfo() {
-      console.log(this.$store.state.users.info)
       return this.$store.state.users.info
     },
   },
@@ -64,12 +66,12 @@ export default {
 
     <div class="status">
       <div
-          v-if="userInfo !== null"
+          v-if="roomInfo !== null"
           class="room-current"
       >
         <div class="box">
-          <div class="title">{{ userInfo.room.title }}</div>
-          <div class="login">{{ userInfo.user.login }}</div>
+          <div class="title">{{ roomInfo.title }}</div>
+          <div v-if="userInfo" class="login">{{ userInfo.login }}</div>
         </div>
         <button
             @click="leave()"
