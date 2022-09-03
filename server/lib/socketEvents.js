@@ -1,4 +1,4 @@
-import {getUserInfo, getRooms, moveUser, kickUser, addSocket, removeSocket} from "./rooms.js";
+import {getUserInfo, getRooms, moveUser, kickUser, addSocket, removeSocket, getRoomInfo} from "./rooms.js";
 
 const onConnection = socket => {
     socket.emit('rooms', getRooms())
@@ -8,6 +8,7 @@ const onConnection = socket => {
         if (info) {
             addSocket(socket.id, login)
             socket.emit('user-info', info)
+            socket.emit('room-info', getRoomInfo({login}))
         } else {
             onError('No such login')
             socket.disconnect()

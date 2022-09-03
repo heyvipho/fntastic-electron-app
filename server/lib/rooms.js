@@ -158,4 +158,4 @@ const sendUpdates = () => {
   })
 }
 
-export {getUserInfo, getRooms, moveUser, kickUser, addSocket, removeSocket}
+export {getRoomInfo, getUserInfo, getRooms, moveUser, kickUser, addSocket, removeSocket}

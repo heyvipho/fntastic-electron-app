@@ -23,8 +23,8 @@ const connect = async () => {
 
   socket.on('user-info', info => {
     store.commit('main/setConnected', true)
-    toast.info('You were connected and logged in successfully')
     store.commit('users/setInfo', info)
+    toast.info('You were connected and logged in successfully')
   })
 
   socket.on('room-info', info => {
